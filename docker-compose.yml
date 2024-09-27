@@ -5,27 +5,33 @@ networks:
   internalnet:
 
 services:
+
   # database
   db:
     restart: unless-stopped
     container_name: db
-    image: ubuntu:latest
+    image: postgres:alpine
     environment:
       TZ: Europe/Bratislava
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-unsafepasswordifnotspecified}
     volumes: 
       - dbdata:/pgdata
     networks: 
       - internalnet
     ports: 
-      - published: 5432
+    # publish to different than standard port, so as not to interfere with
+    # existing running instances
+    # Publis, mainly for debug, therefore only locally
+      - published: 5433
         target: 5432
         host_ip: 127.0.0.1
     # ------------
-    tty: true
+    # tty: true
     # command: echo I am db image
     # build:
       # context: db
       # dockerfile: Dockerfile
+
   # backend
   be:
     restart: unless-stopped
