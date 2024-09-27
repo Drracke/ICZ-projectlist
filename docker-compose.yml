@@ -1,0 +1,50 @@
+
+name: projectlist
+
+networks:
+  internalnet:
+
+services:
+  # database
+  db:
+    restart: unless-stopped
+    container_name: db
+    image: ubuntu:latest
+    environment:
+      TZ: Europe/Bratislava
+    volumes: 
+      - dbdata:/pgdata
+    networks: 
+      - internalnet
+    ports: 
+      - published: 5432
+        target: 5432
+        host_ip: 127.0.0.1
+    # ------------
+    tty: true
+    # command: echo I am db image
+    # build:
+      # context: db
+      # dockerfile: Dockerfile
+  # backend
+  be:
+    restart: unless-stopped
+    container_name: be
+    image: ubuntu:latest
+    depends_on:
+      - db
+    networks: 
+      - internalnet
+    # -----------
+    tty: true
+
+  # frontend
+  fe:
+    restart: unless-stopped
+    container_name: fe
+    image: ubuntu:latest
+    # -----------
+    tty: true
+
+volumes:
+  dbdata:
