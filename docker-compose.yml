@@ -15,7 +15,7 @@ services:
       TZ: Europe/Bratislava
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-unsafepasswordifnotspecified}
     volumes: 
-      - dbdata:/pgdata
+      - dbdata:/var/lib/postgresql/data
     networks: 
       - internalnet
     ports: 
@@ -36,11 +36,23 @@ services:
   be:
     restart: unless-stopped
     container_name: be
-    image: ubuntu:latest
+    # image: eclipse-temurin:21.0.4_7-jre-ubi9-minimal
+    # image: eclipse-temurin:21.0.4_7-jdk-ubi9-minimal
+    # image: alpine:3.20.3
+    
+    # name that does not exist on docker hub or elsewhere,
+    # therefore build will be forced
+    image: local/be
+    build:
+      context: be
     depends_on:
       - db
     networks: 
       - internalnet
+    ports:
+      - published: 8080
+        target: 8080
+        host_ip: 127.0.0.1
     # -----------
     tty: true
 
@@ -48,9 +60,13 @@ services:
   fe:
     restart: unless-stopped
     container_name: fe
-    image: ubuntu:latest
+    image: debian:latest
     # -----------
     tty: true
+    networks: 
+      - internalnet
+    environment:
+      TZ: Europe/Bratislava
 
 volumes:
   dbdata:
