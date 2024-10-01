@@ -3,13 +3,19 @@ package berger.projectlist.repository.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
-import java.util.Objects;
+// import java.util.Objects;
 
 @Entity
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode
 @Table(name = "COMPANY")
 public class Company {
 
@@ -23,34 +29,8 @@ public class Company {
     @Column(name = "ico")
     private String ico;
 
-    public Company() {}
-
     public Company(String companyName, String ico) {
         this.companyName = companyName;
-        this.ico = ico;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getIco() {
-        return ico;
-    }
-
-    public void setIco(String ico) {
         this.ico = ico;
     }
 

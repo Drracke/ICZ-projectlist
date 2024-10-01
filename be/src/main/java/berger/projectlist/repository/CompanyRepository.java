@@ -13,4 +13,7 @@ public interface CompanyRepository extends JpaRepository<Company, String> {
 
     @Query("select c from Company c")
     List<Company> getAllCompanies();
+
+    @Query("select c from Company c where c.ico = ?1")
+    List<Company> findCompanyByIco(String ico);
 }

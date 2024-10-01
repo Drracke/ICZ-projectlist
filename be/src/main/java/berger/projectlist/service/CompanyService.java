@@ -1,6 +1,7 @@
 package berger.projectlist.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,14 @@ public class CompanyService {
 
     public List<Company> getAllCompanies() {
         return companyRepository.getAllCompanies();
+    }
+
+    public Company getCompanyByIco(final String id) {
+        Company ret = null;
+        List<Company> list = companyRepository.findCompanyByIco(id);
+        if (list.size() > 0)
+            ret = list.get(0);
+
+        return ret;
     }
 }

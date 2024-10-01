@@ -4,6 +4,11 @@ package berger.projectlist.repository.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +16,8 @@ import jakarta.persistence.Column;
 import java.util.Objects;
 
 @Entity
-@Table(name = "PROJECT_ROLE")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode
+@Table(name = "PROJECTROLE")
 public class ProjectRole {
 
     @Id
@@ -20,4 +26,8 @@ public class ProjectRole {
 
     @Column(name = "role_name")
     private String roleName;
+
+    public ProjectRole(String roleName) {
+        this.roleName = roleName;
+    }
 }

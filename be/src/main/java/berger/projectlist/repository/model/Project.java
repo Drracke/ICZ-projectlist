@@ -4,13 +4,22 @@ package berger.projectlist.repository.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import java.util.Objects;
 
 @Entity
+@Getter @Setter @NoArgsConstructor  @EqualsAndHashCode
 @Table(name = "PROJECT")
 public class Project {
 
@@ -24,27 +33,14 @@ public class Project {
     @Column(name = "project_short")
     private String projectShort;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Project project = (Project) o;
-        return id == project.id;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "customer_company")
+    private Company company;
+
+    public Project(String projectName, String projectShort, Company company) {
+        this.projectName = projectName;
+        this.projectShort = projectShort;
+        this.company = company;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, projectName, projectShort);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Project() {
-    }
 }

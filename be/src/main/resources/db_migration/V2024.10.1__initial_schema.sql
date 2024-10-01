@@ -7,15 +7,12 @@ CREATE TABLE PERSON
     email         VARCHAR(255)
 );
 
-CREATE SEQUENCE company_id_seq;
 CREATE TABLE COMPANY
 (
-    -- rodne cislo ako ID
     id            SERIAL PRIMARY KEY,
     company_name  VARCHAR(255),
     ico           VARCHAR(255)
 );
-
 
 CREATE TABLE PROJECT
 (
@@ -26,7 +23,7 @@ CREATE TABLE PROJECT
     FOREIGN KEY (customer_company) REFERENCES COMPANY (id)
 );
 
-CREATE TABLE PROJECT_ROLE
+CREATE TABLE PROJECTROLE
 (
     id                  SERIAL PRIMARY KEY,
     role_name           VARCHAR(255)
@@ -40,7 +37,7 @@ CREATE TABLE ASSIGNMENT
     role_id             INTEGER,
     FOREIGN KEY (project_id) REFERENCES PROJECT (id),
     FOREIGN KEY (person_id) REFERENCES PERSON (id),
-    FOREIGN KEY (role_id) REFERENCES PROJECT_ROLE (id)
+    FOREIGN KEY (role_id) REFERENCES PROJECTROLE (id)
 
 );
 
